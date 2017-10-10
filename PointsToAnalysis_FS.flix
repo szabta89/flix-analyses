@@ -3,6 +3,7 @@ namespace SUPT {
 lat VarPointsTo_Before_FS(node : Str, var : Str, targetHeapLoc : SObject)
 lat VarPointsTo_After_FS(node : Str, var : Str, targetHeapLoc : SObject)
 lat VarPointsTo_At_FS(node : Str, var : Str, targetHeapLoc : SObject)
+rel VarPointsTo_At_FS0(node : Str, var : Str)
 lat FieldPointsTo_After_FS(node : Str, sourceHeapLoc : Str, field : Str, targetHeapLoc : SObject)
 lat FieldPointsTo_Before_FS(node : Str, sourceHeapLoc : Str, field : Str, targetHeapLoc : SObject)
 lat FieldPointsTo_At_FS(node : Str, sourceHeapLoc : Str, field : Str, targetHeapLoc : SObject)
@@ -17,7 +18,7 @@ VarPointsTo_After_FS(node : Str, var : Str, targetHeapLoc : SObject) :-
   	VarPointsTo_Before_FS(node, var, targetHeapLoc).
 
 VarPointsTo_After_FS(node : Str, var : Str, targetHeapLoc : SObject) :- 
-	VarPointsTo_At_FS(node, var0, _),
+	VarPointsTo_At_FS0(node, var0),
 	neq(var, var0),
   	VarPointsTo_Before_FS(node, var, targetHeapLoc).
   	
@@ -30,6 +31,10 @@ VarPointsTo_At_FS(node : Str, var : Str, targetHeapLoc : SObject) :-
 	AssignmentSides(node, left, right),
 	VariableInExpression(left, var),
 	TargetHeapLocation_FS(node, right, _, targetHeapLoc).
+	
+VarPointsTo_At_FS0(node : Str, var : Str) :- 
+	AssignmentSides(node, left, _),
+	VariableInExpression(left, var).
 	
 FieldPointsTo_Before_FS(node : Str, sourceHeapLoc : Str, field : Str, targetHeapLoc : SObject) :- 
 	CFGEdge(source, node),

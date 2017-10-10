@@ -1,5 +1,10 @@
 namespace SUPT {
 
+	index Parent({child}, {child, parent})
+    index Ancestor({descendant}, {descendant, ancestor})
+    index AssignmentSides({node}, {node, right}, {node, left})
+    index FieldAccessInExpression({container}, {container, exp})
+
 	// Input relations
 	rel Expression(exp : Str) //
 	rel ExpressionStatement(stmt : Str) //
